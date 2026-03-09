@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BorLock – Coșul tău de cumpărături. Verifică produsele selectate și finalizează comanda.">
+  <title>Coș de cumpărături – BorLock</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="index.html" class="navbar-logo">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">BorLock</span>
+      </a>
+      <div class="navbar-search">
+        <input type="text" id="navbar-search-input" placeholder="Caută produse..." aria-label="Caută produse">
+        <span class="search-icon" onclick="handleNavbarSearch()">🔍</span>
+      </div>
+      <ul class="nav-links" id="nav-menu">
+        <li><a href="index.html">🏠 Acasă</a></li>
+        <li><a href="products.html">🛍️ Produse</a></li>
+        <li><a href="categories.html">📂 Categorii</a></li>
+        <li><a href="favorites.html">❤️ Favorite</a></li>
+        <li><a href="compare.html">⚖️ Compară</a></li>
+        <li>
+          <a href="cart.html" class="cart-link">
+            🛒 Coș
+            <span id="cart-badge">0</span>
+          </a>
+        </li>
+        <li><a href="login.html">👤 Conectează-te</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Meniu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="page-header-content">
+      <div class="breadcrumb">
+        <a href="index.html">Acasă</a>
+        <span class="separator">›</span>
+        <span>Coș de cumpărături</span>
+      </div>
+      <h1>🛒 Coșul meu</h1>
+    </div>
+  </div>
+
+  <!-- CONȚINUT PRINCIPAL -->
+  <main>
+    <div class="cart-page">
+
+      <!-- Mesaj coș gol -->
+      <div class="cart-empty" id="cart-empty" style="display: none;" role="status">
+        <span class="empty-icon">🛒</span>
+        <h2>Coșul tău este gol</h2>
+        <p>Nu ai adăugat niciun produs în coș. Descoperă produsele noastre!</p>
+        <a href="products.html" class="btn-primary">🛍️ Cumpără acum</a>
+      </div>
+
+      <!-- Conținut coș (vizibil când are produse) -->
+      <div id="cart-content" style="display: none;">
+        <div class="cart-layout">
+
+          <!-- Lista produse -->
+          <div class="cart-items-section">
+            <!-- Header tabel coș (desktop) -->
+            <div class="cart-items-header">
+              <span></span>
+              <span>Produs</span>
+              <span>Preț</span>
+              <span>Cantitate</span>
+              <span>Subtotal</span>
+              <span></span>
+            </div>
+            <!-- Items populate de cart.js -->
+            <div id="cart-items">
+            </div>
+
+            <!-- Acțiuni coș -->
+            <div style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding: 16px;
+              background: white;
+              border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+              box-shadow: var(--shadow);
+              flex-wrap: wrap;
+              gap: 12px;
+            ">
+              <a href="products.html" style="
+                color: var(--secondary);
+                font-weight: 600;
+                font-size: 0.9rem;
+                display: flex;
+                align-items: center;
+                gap: 4px;
+              ">← Continuă cumpărăturile</a>
+              <button onclick="clearCart()" style="
+                background: none;
+                color: var(--danger);
+                font-size: 0.85rem;
+                font-weight: 600;
+                padding: 8px 16px;
+                border: 1px solid var(--danger);
+                border-radius: 6px;
+                transition: var(--transition);
+              " onmouseover="this.style.background='var(--danger)';this.style.color='white'"
+                 onmouseout="this.style.background='none';this.style.color='var(--danger)'">
+                🗑️ Golește coșul
+              </button>
+            </div>
+          </div>
+
+          <!-- Sumar și checkout -->
+          <div class="cart-summary">
+            <h3>📋 Sumar comandă</h3>
+            <div id="cart-total">
+              <!-- Populat de cart.js -->
+            </div>
+
+            <!-- Câmp cod de reducere -->
+            <div style="margin: 16px 0;">
+              <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-dark); display: block; margin-bottom: 6px;">
+                🎟️ Cod de reducere
+              </label>
+              <div style="display: flex; gap: 8px;">
+                <input type="text" id="discount-code-input"
+                  placeholder="Ex: BORLOCK25"
+                  style="
+                    flex: 1;
+                    padding: 10px 12px;
+                    border: 2px solid var(--border);
+                    border-radius: 8px;
+                    font-size: 0.875rem;
+                    outline: none;
+                    transition: var(--transition);
+                  "
+                  onfocus="this.style.borderColor='var(--secondary)'"
+                  onblur="this.style.borderColor='var(--border)'">
+                <button onclick="applyDiscountCode()" style="
+                  background: var(--secondary);
+                  color: white;
+                  padding: 10px 16px;
+                  border-radius: 8px;
+                  font-size: 0.875rem;
+                  font-weight: 600;
+                  transition: var(--transition);
+                " onmouseover="this.style.background='#0055dd'"
+                   onmouseout="this.style.background='var(--secondary)'">
+                  Aplică
+                </button>
+              </div>
+              <p id="discount-message" style="font-size: 0.8rem; margin-top: 6px; display: none;"></p>
+            </div>
+
+            <!-- Buton finalizare comandă -->
+            <button class="btn-checkout" onclick="checkout()">
+              ✅ Finalizează comanda
+            </button>
+
+            <!-- Metode plată -->
+            <div style="text-align: center; margin-top: 16px; font-size: 0.75rem; color: var(--text-light);">
+              <p>Plată securizată prin:</p>
+              <p style="font-size: 1rem; margin-top: 6px;">💳 💴 🏦 📲</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- MODAL CONFIRMARE COMANDĂ -->
+  <div class="modal-overlay" id="checkout-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal">
+      <span class="modal-icon">🎉</span>
+      <h2 id="modal-title">Comandă plasată cu succes!</h2>
+      <p>Numărul comenzii tale:</p>
+      <p class="order-number" id="order-number">BL000000</p>
+      <p style="margin-top: 8px;">Total plătit: <strong id="order-total">0 RON</strong></p>
+      <p style="margin-top: 12px; font-size: 0.875rem; color: var(--text-light);">
+        Vei primi o confirmare pe email. Comanda va fi livrată în 24-48 ore.
+      </p>
+      <button class="modal-btn" onclick="closeCheckoutModal(); window.location.href='products.html'">
+        Continuă cumpărăturile →
+      </button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="footer-logo">⚡ BorLock</span>
+        <p>Magazin online de tehnologie — soluții complete pentru pasionații de tech din România.</p>
+        <div class="footer-social">
+          <a href="#" title="Facebook">📘</a>
+          <a href="#" title="Instagram">📸</a>
+          <a href="#" title="YouTube">▶️</a>
+          <a href="#" title="Twitter">🐦</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigare</h4>
+        <ul>
+          <li><a href="index.html">Acasă</a></li>
+          <li><a href="products.html">Produse</a></li>
+          <li><a href="categories.html">Categorii</a></li>
+          <li><a href="cart.html">Coș</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Cont</h4>
+        <ul>
+          <li><a href="login.html">Autentificare</a></li>
+          <li><a href="register.html">Înregistrare</a></li>
+          <li><a href="favorites.html">Favorite</a></li>
+          <li><a href="compare.html">Comparare</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Informații</h4>
+        <ul>
+          <li><a href="#">Despre noi</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Termeni și condiții</a></li>
+          <li><a href="#">Politica de confidențialitate</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 BorLock. Toate drepturile rezervate.</p>
+      <p>Proiect educațional – Atestat IT, clasa a XII-a</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script src="js/script.js"></script>
+  <script src="js/cart.js"></script>
+
+  <script>
+    /* ============================================================
+       LOGICĂ SPECIFICĂ cart.html
+       ============================================================ */
+
+    function handleNavbarSearch() {
+      const query = document.getElementById('navbar-search-input').value.trim();
+      if (query) window.location.href = `products.html?search=${encodeURIComponent(query)}`;
+    }
+
+    document.getElementById('navbar-search-input').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') handleNavbarSearch();
+    });
+
+    /**
+     * Aplică un cod de reducere
+     */
+    function applyDiscountCode() {
+      const codeInput = document.getElementById('discount-code-input');
+      const message = document.getElementById('discount-message');
+      const code = codeInput.value.trim().toUpperCase();
+
+      // Verificăm codul salvat de loterie sau codul demo
+      const savedCode = localStorage.getItem('borlock_lottery_win');
+
+      if (code === 'BORLOCK25' || (savedCode && code === savedCode)) {
+        message.textContent = '✅ Cod aplicat! Reducere de 25% activată.';
+        message.style.color = 'var(--success)';
+        message.style.display = 'block';
+        codeInput.style.borderColor = 'var(--success)';
+        showToast('Cod de reducere aplicat! 🎉', 'success');
+      } else if (code === '') {
+        message.textContent = '';
+        message.style.display = 'none';
+      } else {
+        message.textContent = '❌ Cod invalid. Verifică și încearcă din nou.';
+        message.style.color = 'var(--danger)';
+        message.style.display = 'block';
+        codeInput.style.borderColor = 'var(--danger)';
+      }
+    }
+
+    // Permitem aplicarea codului cu Enter
+    document.getElementById('discount-code-input').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') applyDiscountCode();
+    });
+
+    // Dacă există cod de reducere salvat, îl precompletăm
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedCode = localStorage.getItem('borlock_lottery_win');
+      if (savedCode) {
+        const codeInput = document.getElementById('discount-code-input');
+        if (codeInput) codeInput.placeholder = `Ai codul: ${savedCode}`;
+      }
+    });
+  </script>
+</body>
+</html>

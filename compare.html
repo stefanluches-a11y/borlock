@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BorLock – Compară produse side-by-side. Până la 3 produse în același timp.">
+  <title>Comparare produse – BorLock</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="index.html" class="navbar-logo">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">BorLock</span>
+      </a>
+      <div class="navbar-search">
+        <input type="text" id="navbar-search-input" placeholder="Caută produse..." aria-label="Caută produse">
+        <span class="search-icon" onclick="handleNavbarSearch()">🔍</span>
+      </div>
+      <ul class="nav-links" id="nav-menu">
+        <li><a href="index.html">🏠 Acasă</a></li>
+        <li><a href="products.html">🛍️ Produse</a></li>
+        <li><a href="categories.html">📂 Categorii</a></li>
+        <li><a href="favorites.html">❤️ Favorite</a></li>
+        <li><a href="compare.html">⚖️ Compară</a></li>
+        <li>
+          <a href="cart.html" class="cart-link">
+            🛒 Coș
+            <span id="cart-badge">0</span>
+          </a>
+        </li>
+        <li><a href="login.html">👤 Conectează-te</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Meniu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="page-header-content">
+      <div class="breadcrumb">
+        <a href="index.html">Acasă</a>
+        <span class="separator">›</span>
+        <span>Comparare produse</span>
+      </div>
+      <h1>⚖️ Comparare produse</h1>
+    </div>
+  </div>
+
+  <!-- CONȚINUT PRINCIPAL -->
+  <main>
+    <div class="compare-page">
+
+      <!-- Header cu info -->
+      <div class="section-header" style="margin-bottom: 24px;">
+        <div>
+          <h2 class="section-title">Compară specificațiile</h2>
+          <p class="section-subtitle" id="compare-count">Selectează produse pentru a le compara (maxim 3)</p>
+        </div>
+        <button onclick="clearCompare()" id="clear-compare-btn"
+          style="
+            background: none;
+            color: var(--danger);
+            font-size: 0.875rem;
+            font-weight: 600;
+            padding: 8px 16px;
+            border: 1px solid var(--danger);
+            border-radius: 8px;
+            display: none;
+            cursor: pointer;
+            transition: var(--transition);
+          "
+          onmouseover="this.style.background='var(--danger)';this.style.color='white'"
+          onmouseout="this.style.background='none';this.style.color='var(--danger)'">
+          🗑️ Resetează compararea
+        </button>
+      </div>
+
+      <!-- Mesaj comparare goală -->
+      <div class="compare-empty" id="compare-empty" style="display: none;" role="status">
+        <span class="empty-icon">⚖️</span>
+        <h2>Niciun produs selectat pentru comparare</h2>
+        <p>Adaugă produse pentru comparare folosind butonul ⚖️ de pe cardurile de produs.</p>
+        <a href="products.html" class="btn-primary">🛍️ Descoperă produse</a>
+      </div>
+
+      <!-- Tabel comparare -->
+      <div id="compare-content" style="display: none;">
+        <div class="compare-table-wrapper">
+          <table class="compare-table" id="compare-table" role="table" aria-label="Tabel comparare produse">
+            <!-- Populat de JS -->
+          </table>
+        </div>
+
+        <!-- Butoane add to cart pentru produsele comparate -->
+        <div id="compare-add-buttons" style="
+          display: flex;
+          gap: 16px;
+          margin-top: 20px;
+          flex-wrap: wrap;
+        ">
+          <!-- Populate de JS -->
+        </div>
+      </div>
+
+      <!-- Instrucțiuni dacă sunt sub 2 produse -->
+      <div id="compare-tip" style="
+        background: rgba(0, 102, 255, 0.05);
+        border: 1px solid rgba(0, 102, 255, 0.2);
+        border-radius: 8px;
+        padding: 16px 20px;
+        margin-top: 20px;
+        font-size: 0.875rem;
+        color: var(--text-light);
+        display: none;
+      ">
+        💡 <strong>Sfat:</strong> Adaugă cel puțin 2 produse pentru a vedea comparația. Mergi la
+        <a href="products.html" style="color: var(--secondary); font-weight: 600;">Produse</a>
+        și apasă ⚖️ pe cardurile dorite.
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="footer-logo">⚡ BorLock</span>
+        <p>Magazin online de tehnologie — soluții complete pentru pasionații de tech din România.</p>
+        <div class="footer-social">
+          <a href="#" title="Facebook">📘</a>
+          <a href="#" title="Instagram">📸</a>
+          <a href="#" title="YouTube">▶️</a>
+          <a href="#" title="Twitter">🐦</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigare</h4>
+        <ul>
+          <li><a href="index.html">Acasă</a></li>
+          <li><a href="products.html">Produse</a></li>
+          <li><a href="categories.html">Categorii</a></li>
+          <li><a href="cart.html">Coș</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Cont</h4>
+        <ul>
+          <li><a href="login.html">Autentificare</a></li>
+          <li><a href="register.html">Înregistrare</a></li>
+          <li><a href="favorites.html">Favorite</a></li>
+          <li><a href="compare.html">Comparare</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Informații</h4>
+        <ul>
+          <li><a href="#">Despre noi</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Termeni și condiții</a></li>
+          <li><a href="#">Politica de confidențialitate</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 BorLock. Toate drepturile rezervate.</p>
+      <p>Proiect educațional – Atestat IT, clasa a XII-a</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script src="js/script.js"></script>
+  <script src="js/cart.js"></script>
+
+  <script>
+    /* ============================================================
+       LOGICĂ SPECIFICĂ compare.html
+       ============================================================ */
+
+    /**
+     * Randează tabelul de comparare
+     */
+    function renderCompare() {
+      const compareEmpty = document.getElementById('compare-empty');
+      const compareContent = document.getElementById('compare-content');
+      const compareTip = document.getElementById('compare-tip');
+      const clearBtn = document.getElementById('clear-compare-btn');
+      const countEl = document.getElementById('compare-count');
+
+      // Obținem ID-urile produselor pentru comparare
+      const compareIds = JSON.parse(localStorage.getItem('borlock_compare') || '[]');
+
+      // Obținem obiectele produselor
+      const compareProducts = compareIds
+        .map(id => getProductById(id))
+        .filter(p => p !== undefined);
+
+      // Actualizăm contorul
+      if (countEl) countEl.textContent = `${compareProducts.length}/3 produse selectate`;
+
+      if (compareProducts.length === 0) {
+        // Nimic selectat
+        if (compareEmpty) compareEmpty.style.display = 'flex';
+        if (compareContent) compareContent.style.display = 'none';
+        if (compareTip) compareTip.style.display = 'none';
+        if (clearBtn) clearBtn.style.display = 'none';
+        return;
+      }
+
+      if (compareProducts.length === 1) {
+        // Un singur produs – afișăm sfatul
+        if (compareEmpty) compareEmpty.style.display = 'none';
+        if (compareContent) compareContent.style.display = 'block';
+        if (compareTip) compareTip.style.display = 'block';
+        if (clearBtn) clearBtn.style.display = 'block';
+      } else {
+        if (compareEmpty) compareEmpty.style.display = 'none';
+        if (compareContent) compareContent.style.display = 'block';
+        if (compareTip) compareTip.style.display = 'none';
+        if (clearBtn) clearBtn.style.display = 'block';
+      }
+
+      // Construim tabelul de comparare
+      buildCompareTable(compareProducts);
+
+      // Construim butoanele de adăugare în coș
+      buildCompareAddButtons(compareProducts);
+    }
+
+    /**
+     * Construiește tabelul HTML de comparare
+     * @param {Array} compareProducts – produsele de comparat
+     */
+    function buildCompareTable(compareProducts) {
+      const table = document.getElementById('compare-table');
+      if (!table) return;
+
+      // Definiția rândurilor din tabel
+      const rows = [
+        { label: '🖼️ Imagine', key: 'image' },
+        { label: '💰 Preț', key: 'price' },
+        { label: '⭐ Rating', key: 'rating' },
+        { label: '🏷️ Categorie', key: 'category' },
+        { label: '📦 Disponibilitate', key: 'stock' },
+        { label: '🔧 Procesor', key: 'specs.cpu' },
+        { label: '💾 Memorie RAM', key: 'specs.ram' },
+        { label: '💿 Stocare', key: 'specs.storage' },
+        { label: '🎮 Placă video', key: 'specs.gpu' },
+        { label: '🖥️ Display', key: 'specs.display' }
+      ];
+
+      // Construim header-ul tabelului
+      const headerRow = `
+        <tr>
+          <th class="compare-row-label" style="width: 140px;">Specificație</th>
+          ${compareProducts.map(p => `
+            <th class="compare-product-header">
+              <img src="${getProductImage(p)}" alt="${p.name}">
+              <span class="product-name">${p.name}</span>
+              <button class="btn-remove-compare" onclick="removeFromCompare(${p.id})">
+                ✕ Elimină
+              </button>
+            </th>
+          `).join('')}
+        </tr>
+      `;
+
+      // Construim rândurile de date
+      const dataRows = rows.map(row => {
+        if (row.key === 'image') return ''; // Deja în header
+
+        const cells = compareProducts.map(p => {
+          let value = '';
+
+          if (row.key.startsWith('specs.')) {
+            const specKey = row.key.split('.')[1];
+            value = p.specs[specKey] || '–';
+            if (value === 'N/A') value = '–';
+          } else if (row.key === 'price') {
+            value = `
+              <strong style="color: var(--secondary); font-size: 1.1rem;">${formatPrice(p.price)}</strong>
+              ${p.oldPrice ? `<br><span style="text-decoration: line-through; color: var(--text-light); font-size: 0.85rem;">${formatPrice(p.oldPrice)}</span>` : ''}
+            `;
+          } else if (row.key === 'rating') {
+            value = `${renderStars(p.rating)} <span style="font-size: 0.85rem; color: var(--text-light);">(${p.rating})</span>`;
+          } else if (row.key === 'stock') {
+            value = p.stock > 0
+              ? `<span style="color: var(--success); font-weight: 600;">✓ În stoc (${p.stock})</span>`
+              : `<span style="color: var(--danger); font-weight: 600;">✗ Stoc epuizat</span>`;
+          } else {
+            value = p[row.key] || '–';
+          }
+
+          return `<td>${value}</td>`;
+        }).join('');
+
+        return `
+          <tr>
+            <td class="compare-row-label">${row.label}</td>
+            ${cells}
+          </tr>
+        `;
+      }).join('');
+
+      table.innerHTML = `<thead>${headerRow}</thead><tbody>${dataRows}</tbody>`;
+    }
+
+    /**
+     * Construiește butoanele "Adaugă în coș" pentru produsele comparate
+     */
+    function buildCompareAddButtons(compareProducts) {
+      const container = document.getElementById('compare-add-buttons');
+      if (!container) return;
+
+      container.innerHTML = compareProducts.map(p => `
+        <button
+          onclick="addToCart(${p.id})"
+          ${p.stock === 0 ? 'disabled' : ''}
+          style="
+            flex: 1;
+            min-width: 200px;
+            background: ${p.stock > 0 ? 'linear-gradient(135deg, var(--secondary), #0044cc)' : 'var(--border)'};
+            color: ${p.stock > 0 ? 'white' : 'var(--text-light)'};
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: ${p.stock > 0 ? 'pointer' : 'not-allowed'};
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+          "
+        >
+          🛒 ${p.stock > 0 ? `Adaugă în coș – ${formatPrice(p.price)}` : 'Stoc epuizat'}
+        </button>
+      `).join('');
+    }
+
+    /**
+     * Elimină un produs din lista de comparare
+     * @param {number} productId – ID-ul produsului de eliminat
+     */
+    function removeFromCompare(productId) {
+      let compare = JSON.parse(localStorage.getItem('borlock_compare') || '[]');
+      compare = compare.filter(id => id !== productId);
+      localStorage.setItem('borlock_compare', JSON.stringify(compare));
+      renderCompare();
+      showToast('Produs eliminat din comparare.', 'info');
+    }
+
+    /**
+     * Golește lista de comparare
+     */
+    function clearCompare() {
+      localStorage.removeItem('borlock_compare');
+      renderCompare();
+      showToast('Lista de comparare a fost resetată.', 'info');
+    }
+
+    function handleNavbarSearch() {
+      const query = document.getElementById('navbar-search-input').value.trim();
+      if (query) window.location.href = `products.html?search=${encodeURIComponent(query)}`;
+    }
+
+    document.getElementById('navbar-search-input').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') handleNavbarSearch();
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCompare();
+    });
+  </script>
+</body>
+</html>

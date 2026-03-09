@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BorLock – Detalii produs. Specificații complete, preț și disponibilitate.">
+  <title>Produs – BorLock</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="index.html" class="navbar-logo">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">BorLock</span>
+      </a>
+      <div class="navbar-search">
+        <input type="text" id="navbar-search-input" placeholder="Caută produse..." aria-label="Caută produse">
+        <span class="search-icon" onclick="handleNavbarSearch()">🔍</span>
+      </div>
+      <ul class="nav-links" id="nav-menu">
+        <li><a href="index.html">🏠 Acasă</a></li>
+        <li><a href="products.html">🛍️ Produse</a></li>
+        <li><a href="categories.html">📂 Categorii</a></li>
+        <li><a href="favorites.html">❤️ Favorite</a></li>
+        <li><a href="compare.html">⚖️ Compară</a></li>
+        <li>
+          <a href="cart.html" class="cart-link">
+            🛒 Coș
+            <span id="cart-badge">0</span>
+          </a>
+        </li>
+        <li><a href="login.html">👤 Conectează-te</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Meniu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER / BREADCRUMB -->
+  <div class="page-header" id="product-breadcrumb">
+    <div class="page-header-content">
+      <div class="breadcrumb">
+        <a href="index.html">Acasă</a>
+        <span class="separator">›</span>
+        <a href="products.html">Produse</a>
+        <span class="separator">›</span>
+        <span id="breadcrumb-product-name">Produs</span>
+      </div>
+      <h1 id="page-product-title">Detalii produs</h1>
+    </div>
+  </div>
+
+  <!-- CONȚINUT PRINCIPAL PRODUS -->
+  <main>
+    <div class="product-detail" id="product-detail-container">
+      <!-- Conținutul este generat de JavaScript -->
+    </div>
+
+    <!-- PRODUSE SIMILARE -->
+    <section class="similar-products">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Produse similare</h2>
+          <p class="section-subtitle">S-ar putea să îți placă și acestea</p>
+        </div>
+      </div>
+      <div class="products-grid" id="similar-products-grid">
+        <!-- Populate de JS -->
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="footer-logo">⚡ BorLock</span>
+        <p>Magazin online de tehnologie — soluții complete pentru pasionații de tech din România.</p>
+        <div class="footer-social">
+          <a href="#" title="Facebook">📘</a>
+          <a href="#" title="Instagram">📸</a>
+          <a href="#" title="YouTube">▶️</a>
+          <a href="#" title="Twitter">🐦</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigare</h4>
+        <ul>
+          <li><a href="index.html">Acasă</a></li>
+          <li><a href="products.html">Produse</a></li>
+          <li><a href="categories.html">Categorii</a></li>
+          <li><a href="cart.html">Coș</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Cont</h4>
+        <ul>
+          <li><a href="login.html">Autentificare</a></li>
+          <li><a href="register.html">Înregistrare</a></li>
+          <li><a href="favorites.html">Favorite</a></li>
+          <li><a href="compare.html">Comparare</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Informații</h4>
+        <ul>
+          <li><a href="#">Despre noi</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Termeni și condiții</a></li>
+          <li><a href="#">Politica de confidențialitate</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 BorLock. Toate drepturile rezervate.</p>
+      <p>Proiect educațional – Atestat IT, clasa a XII-a</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script src="js/script.js"></script>
+  <script src="js/cart.js"></script>
+
+  <script>
+    /* ============================================================
+       LOGICĂ SPECIFICĂ product.html
+       ============================================================ */
+
+    /**
+     * Randează pagina de detalii pentru un produs
+     * @param {Object} product – datele produsului
+     */
+    function renderProductDetail(product) {
+      const container = document.getElementById('product-detail-container');
+      if (!container) return;
+
+      const imgSrc = getProductImage(product);
+      const discount = getDiscountPercent(product.price, product.oldPrice);
+      const stars = renderStars(product.rating);
+      const inStock = product.stock > 0;
+
+      // Actualizează breadcrumb și titlul paginii
+      document.getElementById('breadcrumb-product-name').textContent = product.name;
+      document.getElementById('page-product-title').textContent = product.name;
+      document.title = `${product.name} – BorLock`;
+
+      // Construiește tabelul de specificații
+      const specsRows = Object.entries(product.specs)
+        .filter(([k, v]) => v && v !== 'N/A')
+        .map(([k, v]) => {
+          const labels = {
+            cpu: 'Procesor', ram: 'Memorie RAM', storage: 'Stocare',
+            gpu: 'Placă video', display: 'Display', os: 'Sistem de operare',
+            camera: 'Cameră', battery: 'Baterie', switches: 'Switch-uri',
+            driver: 'Driver audio', cores: 'Nuclee', tdp: 'TDP', panel: 'Panel'
+          };
+          return `
+            <tr>
+              <td>${labels[k] || k}</td>
+              <td>${v}</td>
+            </tr>
+          `;
+        }).join('');
+
+      container.innerHTML = `
+        <div class="product-detail-grid">
+          <!-- Imaginea produsului -->
+          <div class="product-detail-image">
+            <img src="${imgSrc}" alt="${product.name}" id="main-product-img">
+          </div>
+
+          <!-- Informații produs -->
+          <div class="product-detail-info">
+            <!-- Badge categorie -->
+            <span style="
+              background: rgba(0,102,255,0.1);
+              color: var(--secondary);
+              padding: 4px 12px;
+              border-radius: 20px;
+              font-size: 0.8rem;
+              font-weight: 600;
+              display: inline-block;
+              margin-bottom: 12px;
+            ">${product.category}</span>
+
+            <h1>${product.name}</h1>
+
+            <!-- Rating -->
+            <div class="product-detail-rating">
+              ${stars}
+              <span style="color: var(--text-light); font-size: 0.9rem;">${product.rating}/5 • ${product.stock} în stoc</span>
+            </div>
+
+            <!-- Disponibilitate -->
+            <div class="product-stock ${inStock ? 'in-stock' : 'out-of-stock'}" style="margin-bottom: 16px;">
+              ${inStock ? `✓ În stoc (${product.stock} disponibile)` : '✗ Stoc epuizat'}
+            </div>
+
+            <!-- Descriere -->
+            <p class="product-detail-description">${product.description}</p>
+
+            <!-- Prețuri -->
+            <div class="product-detail-pricing">
+              ${product.oldPrice ? `<span class="old-price">${formatPrice(product.oldPrice)}</span>` : ''}
+              <span class="current-price">${formatPrice(product.price)}</span>
+              ${discount > 0 ? `<span class="detail-discount-badge">-${discount}%</span>` : ''}
+            </div>
+
+            <!-- Economii -->
+            ${discount > 0 ? `
+              <p style="color: var(--success); font-size: 0.9rem; margin-bottom: 16px; font-weight: 600;">
+                💰 Economisești ${formatPrice(product.oldPrice - product.price)}!
+              </p>
+            ` : ''}
+
+            <!-- Butoane acțiuni -->
+            <div class="product-detail-actions">
+              <button class="btn-add-cart" onclick="addToCart(${product.id})" ${!inStock ? 'disabled' : ''}>
+                🛒 Adaugă în coș
+              </button>
+              <button class="btn-add-fav" onclick="toggleFavorite(${product.id})" id="fav-btn-${product.id}">
+                ❤️ Favorite
+              </button>
+              <button class="btn-add-compare" onclick="addToCompare(${product.id})">
+                ⚖️ Compară
+              </button>
+            </div>
+
+            <!-- Livrare info -->
+            <div style="
+              background: var(--gray);
+              border-radius: 8px;
+              padding: 14px;
+              margin-top: 20px;
+              font-size: 0.85rem;
+              color: var(--text-light);
+            ">
+              <p>🚚 <strong>Livrare gratuită</strong> pentru comenzi peste 500 RON</p>
+              <p style="margin-top: 4px;">🛡️ <strong>Garanție 2 ani</strong> inclus</p>
+              <p style="margin-top: 4px;">🔄 <strong>Retur 30 zile</strong> fără întrebări</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Specificații tehnice complete -->
+        <div style="
+          background: var(--card-bg);
+          border-radius: var(--radius);
+          padding: 32px;
+          box-shadow: var(--shadow);
+          margin-top: 24px;
+        ">
+          <h2 style="margin-bottom: 20px; font-size: 1.2rem;">📋 Specificații tehnice</h2>
+          <table class="specs-table">
+            <tbody>
+              <tr><td>Categorie</td><td>${product.category}</td></tr>
+              <tr><td>Disponibilitate</td><td>${inStock ? 'În stoc' : 'Stoc epuizat'}</td></tr>
+              ${specsRows}
+              <tr><td>Rating</td><td>${product.rating}/5 ⭐</td></tr>
+            </tbody>
+          </table>
+        </div>
+      `;
+
+      // Actualizează starea butonului de favorite
+      updateFavoriteButtons();
+    }
+
+    /**
+     * Randează produsele similare (din aceeași categorie)
+     * @param {Object} product – produsul curent
+     */
+    function renderSimilarProducts(product) {
+      const container = document.getElementById('similar-products-grid');
+      if (!container) return;
+
+      // Filtrăm produsele din aceeași categorie, excludem produsul curent
+      const similar = products
+        .filter(p => p.category === product.category && p.id !== product.id)
+        .slice(0, 4);
+
+      if (similar.length === 0) {
+        container.parentElement.style.display = 'none';
+        return;
+      }
+
+      container.innerHTML = similar.map(p => createProductCard(p)).join('');
+      updateFavoriteButtons();
+    }
+
+    function handleNavbarSearch() {
+      const query = document.getElementById('navbar-search-input').value.trim();
+      if (query) window.location.href = `products.html?search=${encodeURIComponent(query)}`;
+    }
+
+    document.getElementById('navbar-search-input').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') handleNavbarSearch();
+    });
+
+    /* ============================================================
+       INIȚIALIZARE PAGINĂ PRODUS
+       ============================================================ */
+    document.addEventListener('DOMContentLoaded', () => {
+      // Citim ID-ul produsului din URL (ex: product.html?id=1)
+      const urlParams = new URLSearchParams(window.location.search);
+      const productId = parseInt(urlParams.get('id'));
+
+      if (productId) {
+        const product = getProductById(productId);
+        if (product) {
+          renderProductDetail(product);
+          renderSimilarProducts(product);
+        } else {
+          // Produs negăsit
+          document.getElementById('product-detail-container').innerHTML = `
+            <div class="no-results" style="padding: 80px 20px;">
+              <div class="no-results-icon">❌</div>
+              <h3>Produs negăsit</h3>
+              <p>Produsul cu ID-ul ${productId} nu există.</p>
+              <a href="products.html" class="btn-primary" style="display: inline-flex; margin-top: 16px;">← Înapoi la produse</a>
+            </div>
+          `;
+        }
+      } else {
+        // Dacă nu e specificat niciun ID, afișăm primul produs ca exemplu
+        const product = products[0];
+        renderProductDetail(product);
+        renderSimilarProducts(product);
+      }
+    });
+  </script>
+</body>
+</html>

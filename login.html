@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BorLock – Autentifică-te în contul tău pentru acces la oferte și loterie!">
+  <title>Autentificare – BorLock</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="index.html" class="navbar-logo">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">BorLock</span>
+      </a>
+      <div class="navbar-search">
+        <input type="text" id="navbar-search-input" placeholder="Caută produse..." aria-label="Caută produse">
+        <span class="search-icon" onclick="handleNavbarSearch()">🔍</span>
+      </div>
+      <ul class="nav-links" id="nav-menu">
+        <li><a href="index.html">🏠 Acasă</a></li>
+        <li><a href="products.html">🛍️ Produse</a></li>
+        <li><a href="categories.html">📂 Categorii</a></li>
+        <li><a href="favorites.html">❤️ Favorite</a></li>
+        <li><a href="compare.html">⚖️ Compară</a></li>
+        <li>
+          <a href="cart.html" class="cart-link">
+            🛒 Coș
+            <span id="cart-badge">0</span>
+          </a>
+        </li>
+        <li><a href="login.html">👤 Conectează-te</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Meniu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- FORMULAR LOGIN -->
+  <div class="auth-page">
+    <div class="auth-container">
+
+      <!-- Logo -->
+      <div class="auth-logo">
+        <span class="logo-text">⚡ BorLock</span>
+        <p>Bine ai revenit! Conectează-te la contul tău.</p>
+      </div>
+
+      <h2>🔐 Autentificare</h2>
+
+      <!-- Notificare informativă pentru demo -->
+      <div class="demo-notice">
+        <p>📋 <strong>Demo:</strong> Folosește orice email și parolă pentru a testa.</p>
+        <p>Datele reale se verifică prin <strong>PHP + MySQL</strong>.</p>
+      </div>
+
+      <!-- Formular login -->
+      <form id="login-form" novalidate>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email">📧 Adresă de email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="exemplu@email.com"
+            autocomplete="email"
+            required
+          >
+          <span class="field-error" id="email-error"></span>
+        </div>
+
+        <!-- Parolă -->
+        <div class="form-group">
+          <label for="password">🔒 Parolă</label>
+          <div style="position: relative;">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Introdu parola"
+              autocomplete="current-password"
+              required
+            >
+            <!-- Buton vizualizare parolă -->
+            <button type="button"
+              onclick="togglePasswordVisibility()"
+              style="
+                position: absolute;
+                right: 12px;
+                top: 50%;
+                transform: translateY(-50%);
+                background: none;
+                border: none;
+                cursor: pointer;
+                font-size: 1.1rem;
+                color: var(--text-light);
+              "
+              id="toggle-password"
+              title="Arată/ascunde parola"
+              aria-label="Arată parola">
+              👁️
+            </button>
+          </div>
+          <span class="field-error" id="password-error"></span>
+        </div>
+
+        <!-- Mesaj eroare general -->
+        <div id="login-error" style="
+          display: none;
+          background: rgba(239, 68, 68, 0.1);
+          border: 1px solid var(--danger);
+          border-radius: 8px;
+          padding: 10px 14px;
+          font-size: 0.875rem;
+          color: var(--danger);
+          margin-bottom: 16px;
+        "></div>
+
+        <!-- Buton submit -->
+        <button type="submit" class="btn-auth" id="login-btn">
+          🚀 Conectează-te
+        </button>
+
+        <!-- Link parolă uitată -->
+        <div style="text-align: center; margin-top: 12px;">
+          <a href="#" style="font-size: 0.875rem; color: var(--text-light);">Ai uitat parola?</a>
+        </div>
+      </form>
+
+      <!-- Separator -->
+      <div style="
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 20px 0;
+        color: var(--text-light);
+        font-size: 0.85rem;
+      ">
+        <hr style="flex: 1; border-color: var(--border);">
+        sau
+        <hr style="flex: 1; border-color: var(--border);">
+      </div>
+
+      <!-- Link înregistrare -->
+      <div class="auth-footer">
+        <p>Nu ai cont? <a href="register.html">Înregistrează-te gratuit →</a></p>
+      </div>
+
+      <!-- Link PHP (pentru evaluare) -->
+      <div style="
+        margin-top: 16px;
+        padding: 12px;
+        background: var(--gray);
+        border-radius: 8px;
+        font-size: 0.75rem;
+        color: var(--text-light);
+        text-align: center;
+      ">
+        🔧 <strong>PHP backend:</strong> Procesare via
+        <code style="background: white; padding: 2px 5px; border-radius: 3px;">php/login_process.php</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="footer-logo">⚡ BorLock</span>
+        <p>Magazin online de tehnologie — soluții complete pentru pasionații de tech din România.</p>
+        <div class="footer-social">
+          <a href="#" title="Facebook">📘</a>
+          <a href="#" title="Instagram">📸</a>
+          <a href="#" title="YouTube">▶️</a>
+          <a href="#" title="Twitter">🐦</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigare</h4>
+        <ul>
+          <li><a href="index.html">Acasă</a></li>
+          <li><a href="products.html">Produse</a></li>
+          <li><a href="categories.html">Categorii</a></li>
+          <li><a href="cart.html">Coș</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Cont</h4>
+        <ul>
+          <li><a href="login.html">Autentificare</a></li>
+          <li><a href="register.html">Înregistrare</a></li>
+          <li><a href="favorites.html">Favorite</a></li>
+          <li><a href="compare.html">Comparare</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Informații</h4>
+        <ul>
+          <li><a href="#">Despre noi</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Termeni și condiții</a></li>
+          <li><a href="#">Politica de confidențialitate</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 BorLock. Toate drepturile rezervate.</p>
+      <p>Proiect educațional – Atestat IT, clasa a XII-a</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script src="js/script.js"></script>
+  <script src="js/lottery.js"></script>
+
+  <script>
+    /* ============================================================
+       LOGICĂ SPECIFICĂ login.html
+       ============================================================ */
+
+    /**
+     * Validează formularul de login pe client
+     * @returns {boolean} true dacă datele sunt valide
+     */
+    function validateLoginForm() {
+      let valid = true;
+
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const emailError = document.getElementById('email-error');
+      const passwordError = document.getElementById('password-error');
+
+      // Resetăm erorile
+      emailError.textContent = '';
+      passwordError.textContent = '';
+      document.getElementById('email').classList.remove('error');
+      document.getElementById('password').classList.remove('error');
+
+      // Validare email
+      if (!email) {
+        emailError.textContent = 'Adresa de email este obligatorie.';
+        document.getElementById('email').classList.add('error');
+        valid = false;
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        emailError.textContent = 'Introduceți o adresă de email validă.';
+        document.getElementById('email').classList.add('error');
+        valid = false;
+      }
+
+      // Validare parolă
+      if (!password) {
+        passwordError.textContent = 'Parola este obligatorie.';
+        document.getElementById('password').classList.add('error');
+        valid = false;
+      } else if (password.length < 4) {
+        passwordError.textContent = 'Parola trebuie să aibă cel puțin 4 caractere.';
+        document.getElementById('password').classList.add('error');
+        valid = false;
+      }
+
+      return valid;
+    }
+
+    /**
+     * Gestionează toggle vizibilitate parolă
+     */
+    function togglePasswordVisibility() {
+      const passwordInput = document.getElementById('password');
+      const toggleBtn = document.getElementById('toggle-password');
+
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleBtn.textContent = '🙈';
+      } else {
+        passwordInput.type = 'password';
+        toggleBtn.textContent = '👁️';
+      }
+    }
+
+    /**
+     * Simulează autentificarea (pentru demo fără server)
+     * În producție, aceasta trimite datele la php/login_process.php
+     */
+    function simulateLogin(email, password) {
+      return new Promise((resolve) => {
+        // Simulăm un delay de server
+        setTimeout(() => {
+          // Verificăm dacă există utilizatorul înregistrat local
+          const users = JSON.parse(localStorage.getItem('borlock_users') || '[]');
+          const user = users.find(u => u.email === email && u.password === password);
+
+          if (user) {
+            resolve({ success: true, user });
+          } else if (users.length === 0) {
+            // Dacă nu există niciun utilizator, acceptăm orice credențiale (demo)
+            resolve({
+              success: true,
+              user: { name: email.split('@')[0], email }
+            });
+          } else {
+            resolve({ success: false, message: 'Email sau parolă incorectă.' });
+          }
+        }, 800);
+      });
+    }
+
+    // Gestionare submit formular
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (!validateLoginForm()) return;
+
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const loginBtn = document.getElementById('login-btn');
+      const loginError = document.getElementById('login-error');
+
+      // Stare loading
+      loginBtn.disabled = true;
+      loginBtn.textContent = '⏳ Se verifică...';
+      loginError.style.display = 'none';
+
+      try {
+        const result = await simulateLogin(email, password);
+
+        if (result.success) {
+          // Login reușit!
+          // Salvăm datele utilizatorului în sessionStorage
+          sessionStorage.setItem('borlock_user', JSON.stringify(result.user));
+          sessionStorage.setItem('borlock_just_logged_in', 'true');
+
+          showToast(`Bun venit, ${result.user.name}! 🎉`, 'success');
+
+          // Redirecționăm după 1 secundă (după ce se inițiază loteria)
+          setTimeout(() => {
+            // Inițializăm loteria înainte de redirect
+            if (!hasLotteryBeenRun()) {
+              markLotteryAsRun();
+              createLotteryModal();
+              setTimeout(() => {
+                const won = runLottery();
+                saveLotteryResult(won);
+                showLotteryResult(won);
+              }, 2000);
+
+              // Redirecționăm după ce se închide loteria (utilizatorul o închide manual)
+            } else {
+              window.location.href = 'index.html';
+            }
+          }, 500);
+
+          // Override pentru butonul de închidere loterie pentru a redirecta
+          window.closeLotteryModal = function() {
+            const modal = document.getElementById('lottery-modal');
+            if (modal) {
+              modal.classList.add('fade-out');
+              setTimeout(() => {
+                modal.remove();
+                document.body.style.overflow = '';
+                window.location.href = 'index.html';
+              }, 300);
+            }
+          };
+
+        } else {
+          // Eroare autentificare
+          loginError.textContent = result.message || 'Eroare la autentificare.';
+          loginError.style.display = 'block';
+        }
+      } catch (err) {
+        loginError.textContent = 'Eroare de conexiune. Încearcă din nou.';
+        loginError.style.display = 'block';
+      } finally {
+        loginBtn.disabled = false;
+        loginBtn.textContent = '🚀 Conectează-te';
+      }
+    });
+
+    // Eliminăm eroarea când utilizatorul editează câmpurile
+    ['email', 'password'].forEach(field => {
+      document.getElementById(field).addEventListener('input', () => {
+        document.getElementById(`${field}-error`).textContent = '';
+        document.getElementById(field).classList.remove('error');
+        document.getElementById('login-error').style.display = 'none';
+      });
+    });
+
+    function handleNavbarSearch() {
+      const query = document.getElementById('navbar-search-input').value.trim();
+      if (query) window.location.href = `products.html?search=${encodeURIComponent(query)}`;
+    }
+
+    document.getElementById('navbar-search-input').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') handleNavbarSearch();
+    });
+  </script>
+</body>
+</html>

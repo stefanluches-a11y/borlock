@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BorLock – Magazin online de tehnologie. Laptopuri, telefoane, componente PC la prețuri imbatabile!">
+  <title>BorLock – Tehnologie la prețuri imbatabile</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ============================================================
+       NAVBAR – BARĂ DE NAVIGARE (identică pe toate paginile)
+       ============================================================ -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <!-- Logo BorLock -->
+      <a href="index.html" class="navbar-logo">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">BorLock</span>
+      </a>
+
+      <!-- Bara de căutare globală -->
+      <div class="navbar-search">
+        <input type="text" id="navbar-search-input" placeholder="Caută produse..." aria-label="Caută produse">
+        <span class="search-icon" onclick="handleNavbarSearch()">🔍</span>
+      </div>
+
+      <!-- Linkuri navigare principale -->
+      <ul class="nav-links" id="nav-menu" role="navigation" aria-label="Navigare principală">
+        <li><a href="index.html">🏠 Acasă</a></li>
+        <li><a href="products.html">🛍️ Produse</a></li>
+        <li><a href="categories.html">📂 Categorii</a></li>
+        <li><a href="favorites.html">❤️ Favorite</a></li>
+        <li><a href="compare.html">⚖️ Compară</a></li>
+        <li>
+          <a href="cart.html" class="cart-link">
+            🛒 Coș
+            <span id="cart-badge" aria-label="Produse în coș">0</span>
+          </a>
+        </li>
+        <li><a href="login.html">👤 Conectează-te</a></li>
+      </ul>
+
+      <!-- Buton hamburger pentru mobil -->
+      <button class="hamburger" id="hamburger" aria-label="Meniu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       HERO BANNER – SECȚIUNEA PRINCIPALĂ
+       ============================================================ -->
+  <section class="hero" aria-label="Banner principal">
+    <div class="hero-content">
+      <span class="hero-badge">🎉 Oferte speciale până la -40%</span>
+      <h1>
+        Tehnologie la<br>
+        <span>prețuri imbatabile!</span>
+      </h1>
+      <p>
+        Descoperă cele mai noi laptopuri, smartphone-uri și accesorii tech.
+        Livrare rapidă, garanție extinsă și suport 24/7.
+      </p>
+      <div class="hero-buttons">
+        <a href="products.html" class="btn-primary">🛍️ Cumpără acum</a>
+        <a href="categories.html" class="btn-secondary">📂 Vezi categoriile</a>
+      </div>
+      <!-- Statistici magazin -->
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="number">500+</span>
+          <span class="label">Produse</span>
+        </div>
+        <div class="hero-stat">
+          <span class="number">10K+</span>
+          <span class="label">Clienți mulțumiți</span>
+        </div>
+        <div class="hero-stat">
+          <span class="number">24/7</span>
+          <span class="label">Suport</span>
+        </div>
+        <div class="hero-stat">
+          <span class="number">2 ani</span>
+          <span class="label">Garanție</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECȚIUNEA CATEGORII – ACCES RAPID
+       ============================================================ -->
+  <section class="section" style="background: white;">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Categorii populare</h2>
+          <p class="section-subtitle">Găsește rapid ce cauți</p>
+        </div>
+        <a href="categories.html" class="btn-outline">Vezi toate →</a>
+      </div>
+      <!-- Grid categorii – renderizat din JS -->
+      <div class="categories-grid" id="home-categories">
+        <!-- Categoriile sunt renderizate de script.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PRODUSE RECOMANDATE – 6 PRODUSE FEATURED
+       ============================================================ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Produse recomandate</h2>
+          <p class="section-subtitle">Cele mai populare alegeri ale clienților noștri</p>
+        </div>
+        <a href="products.html" class="btn-outline">Vezi toate produsele →</a>
+      </div>
+      <!-- Grid produse featured -->
+      <div class="products-grid" id="featured-products">
+        <!-- Produsele sunt renderizate de script.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECȚIUNEA PROMOȚIONALE – AVANTAJE CUMPARARE
+       ============================================================ -->
+  <section class="promo-section" aria-label="Avantaje cumpărare">
+    <div class="promo-grid">
+      <div class="promo-card">
+        <span class="promo-icon">🚚</span>
+        <h3>Livrare gratuită</h3>
+        <p>Livrare gratuită pentru comenzi peste 500 RON. Expediem în toată România în 24-48 ore.</p>
+      </div>
+      <div class="promo-card">
+        <span class="promo-icon">🛡️</span>
+        <h3>Garanție extinsă</h3>
+        <p>Toate produsele vin cu garanție de minimum 2 ani. Serviciu de reparații inclus.</p>
+      </div>
+      <div class="promo-card">
+        <span class="promo-icon">💳</span>
+        <h3>Plată în rate</h3>
+        <p>Rate fără dobândă la cumpărăturile peste 1000 RON. Compatibil cu toate băncile majore.</p>
+      </div>
+      <div class="promo-card">
+        <span class="promo-icon">🔄</span>
+        <h3>Retur 30 zile</h3>
+        <p>Nu ești mulțumit? Returnează produsul în 30 de zile și primești banii înapoi.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       OFERTE SPECIALE – SECȚIUNE DEALS
+       ============================================================ -->
+  <section class="section" style="background: white;">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Oferte speciale</h2>
+          <p class="section-subtitle">Prețuri reduse pentru o perioadă limitată</p>
+        </div>
+      </div>
+      <!-- Produse cu reducere mare -->
+      <div class="products-grid" id="deals-products">
+        <!-- Renderizat de JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="footer-logo">⚡ BorLock</span>
+        <p>Magazin online de tehnologie — soluții complete pentru pasionații de tech din România.</p>
+        <div class="footer-social">
+          <a href="#" title="Facebook" aria-label="Facebook">📘</a>
+          <a href="#" title="Instagram" aria-label="Instagram">📸</a>
+          <a href="#" title="YouTube" aria-label="YouTube">▶️</a>
+          <a href="#" title="Twitter" aria-label="Twitter">🐦</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigare</h4>
+        <ul>
+          <li><a href="index.html">Acasă</a></li>
+          <li><a href="products.html">Produse</a></li>
+          <li><a href="categories.html">Categorii</a></li>
+          <li><a href="cart.html">Coș</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Cont</h4>
+        <ul>
+          <li><a href="login.html">Autentificare</a></li>
+          <li><a href="register.html">Înregistrare</a></li>
+          <li><a href="favorites.html">Favorite</a></li>
+          <li><a href="compare.html">Comparare</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Informații</h4>
+        <ul>
+          <li><a href="#">Despre noi</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Termeni și condiții</a></li>
+          <li><a href="#">Politica de confidențialitate</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 BorLock. Toate drepturile rezervate.</p>
+      <p>Proiect educațional – Atestat IT, clasa a XII-a</p>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       SCRIPT-URI JavaScript
+       ============================================================ -->
+  <script src="js/script.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/lottery.js"></script>
+
+  <script>
+    /* ============================================================
+       LOGICĂ SPECIFICĂ PAGINII index.html
+       ============================================================ */
+
+    // Categoriile cu iconuri și descrieri
+    const categoriesData = [
+      { name: 'Laptops', icon: '💻', link: 'products.html?category=Laptops' },
+      { name: 'Smartphones', icon: '📱', link: 'products.html?category=Smartphones' },
+      { name: 'Tablete', icon: '📟', link: 'products.html?category=Tablete' },
+      { name: 'Monitoare', icon: '🖥️', link: 'products.html?category=Monitoare' },
+      { name: 'Componente PC', icon: '🔧', link: 'products.html?category=Componente%20PC' },
+      { name: 'Periferice', icon: '⌨️', link: 'products.html?category=Periferice' },
+      { name: 'Audio', icon: '🔊', link: 'products.html?category=Audio' },
+      { name: 'Gaming', icon: '🎮', link: 'products.html?category=Gaming' }
+    ];
+
+    /**
+     * Randează categoriile pe homepage
+     */
+    function renderHomeCategories() {
+      const container = document.getElementById('home-categories');
+      if (!container) return;
+
+      container.innerHTML = categoriesData.map(cat => {
+        const count = products.filter(p => p.category === cat.name).length;
+        return `
+          <a href="${cat.link}" class="category-card">
+            <div class="category-icon">${cat.icon}</div>
+            <span class="category-name">${cat.name}</span>
+            <span class="category-count">${count} produse</span>
+          </a>
+        `;
+      }).join('');
+    }
+
+    /**
+     * Randează primele 6 produse ca featured
+     */
+    function renderFeaturedProducts() {
+      const container = document.getElementById('featured-products');
+      if (!container) return;
+      const featured = products.slice(0, 6);
+      container.innerHTML = featured.map(p => createProductCard(p)).join('');
+      updateFavoriteButtons();
+    }
+
+    /**
+     * Randează produsele cu cele mai mari reduceri
+     */
+    function renderDealsProducts() {
+      const container = document.getElementById('deals-products');
+      if (!container) return;
+      // Sortăm după procentul de reducere și luăm primele 4
+      const deals = [...products]
+        .filter(p => p.oldPrice)
+        .sort((a, b) => getDiscountPercent(b.price, b.oldPrice) - getDiscountPercent(a.price, a.oldPrice))
+        .slice(0, 4);
+      container.innerHTML = deals.map(p => createProductCard(p)).join('');
+      updateFavoriteButtons();
+    }
+
+    /**
+     * Gestionează căutarea din navbar
+     */
+    function handleNavbarSearch() {
+      const query = document.getElementById('navbar-search-input').value.trim();
+      if (query) {
+        window.location.href = `products.html?search=${encodeURIComponent(query)}`;
+      }
+    }
+
+    // Permitem căutarea cu Enter
+    document.getElementById('navbar-search-input').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') handleNavbarSearch();
+    });
+
+    // Inițializare la încărcarea paginii
+    document.addEventListener('DOMContentLoaded', () => {
+      renderHomeCategories();
+      renderFeaturedProducts();
+      renderDealsProducts();
+    });
+  </script>
+</body>
+</html>

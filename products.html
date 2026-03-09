@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BorLock – Toate produsele. Filtrează după categorie, preț și specificații.">
+  <title>Produse – BorLock</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="index.html" class="navbar-logo">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">BorLock</span>
+      </a>
+      <div class="navbar-search">
+        <input type="text" id="navbar-search-input" placeholder="Caută produse..." aria-label="Caută produse">
+        <span class="search-icon" onclick="handleNavbarSearch()">🔍</span>
+      </div>
+      <ul class="nav-links" id="nav-menu">
+        <li><a href="index.html">🏠 Acasă</a></li>
+        <li><a href="products.html">🛍️ Produse</a></li>
+        <li><a href="categories.html">📂 Categorii</a></li>
+        <li><a href="favorites.html">❤️ Favorite</a></li>
+        <li><a href="compare.html">⚖️ Compară</a></li>
+        <li>
+          <a href="cart.html" class="cart-link">
+            🛒 Coș
+            <span id="cart-badge">0</span>
+          </a>
+        </li>
+        <li><a href="login.html">👤 Conectează-te</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Meniu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="page-header-content">
+      <div class="breadcrumb">
+        <a href="index.html">Acasă</a>
+        <span class="separator">›</span>
+        <span>Produse</span>
+      </div>
+      <h1>🛍️ Toate produsele</h1>
+    </div>
+  </div>
+
+  <!-- CONȚINUT PRINCIPAL: SIDEBAR + GRID PRODUSE -->
+  <main>
+    <div class="products-page">
+
+      <!-- ============================================================
+           SIDEBAR FILTRE
+           ============================================================ -->
+      <aside class="filters-sidebar" aria-label="Filtre produse">
+        <h3>🔽 Filtre</h3>
+
+        <!-- Filtru categorii -->
+        <div class="filter-group">
+          <p class="filter-group-title">Categorii</p>
+          <button class="filter-category-btn active" data-category="all">
+            Toate categoriile
+            <span class="cat-count" id="count-all">0</span>
+          </button>
+          <button class="filter-category-btn" data-category="Laptops">
+            💻 Laptops
+            <span class="cat-count" id="count-Laptops">0</span>
+          </button>
+          <button class="filter-category-btn" data-category="Smartphones">
+            📱 Smartphones
+            <span class="cat-count" id="count-Smartphones">0</span>
+          </button>
+          <button class="filter-category-btn" data-category="Tablete">
+            📟 Tablete
+            <span class="cat-count" id="count-Tablete">0</span>
+          </button>
+          <button class="filter-category-btn" data-category="Monitoare">
+            🖥️ Monitoare
+            <span class="cat-count" id="count-Monitoare">0</span>
+          </button>
+          <button class="filter-category-btn" data-category="Componente PC">
+            🔧 Componente PC
+            <span class="cat-count" id="count-Componente">0</span>
+          </button>
+          <button class="filter-category-btn" data-category="Periferice">
+            ⌨️ Periferice
+            <span class="cat-count" id="count-Periferice">0</span>
+          </button>
+          <button class="filter-category-btn" data-category="Audio">
+            🔊 Audio
+            <span class="cat-count" id="count-Audio">0</span>
+          </button>
+          <button class="filter-category-btn" data-category="Gaming">
+            🎮 Gaming
+            <span class="cat-count" id="count-Gaming">0</span>
+          </button>
+        </div>
+
+        <!-- Filtru preț cu range slider -->
+        <div class="filter-group">
+          <p class="filter-group-title">Preț (RON)</p>
+          <input type="range" id="price-range" class="price-range-slider"
+            min="0" max="5000" value="5000" step="50">
+          <p style="font-size: 0.8rem; color: var(--text-light); margin: 6px 0;">
+            Până la: <strong id="price-display">5.000 RON</strong>
+          </p>
+          <div class="price-inputs">
+            <input type="number" id="min-price" placeholder="Min" min="0">
+            <span>–</span>
+            <input type="number" id="max-price" placeholder="Max" max="99999">
+          </div>
+          <button class="btn-apply-price" id="apply-price">Aplică filtrul</button>
+        </div>
+
+        <!-- Reset filtre -->
+        <div class="filter-group">
+          <button class="btn-outline" onclick="resetFilters()" style="width: 100%;">
+            🔄 Resetează filtrele
+          </button>
+        </div>
+      </aside>
+
+      <!-- ============================================================
+           ZONA PRODUSE: SEARCH + SORT + GRID
+           ============================================================ -->
+      <div class="products-content">
+
+        <!-- Bara de căutare -->
+        <div class="search-bar-products" role="search">
+          <input type="text" id="search-input" placeholder="🔍 Caută produse după nume, specificații..." aria-label="Caută produse">
+          <button class="clear-btn" id="search-clear" title="Șterge căutarea" aria-label="Șterge căutarea">✕</button>
+          <button class="search-btn" id="search-btn">Caută</button>
+        </div>
+
+        <!-- Sort + număr rezultate -->
+        <div class="sort-bar">
+          <span class="results-count" id="results-count">Toate produsele</span>
+          <select class="sort-select" id="sort-select" aria-label="Sortare produse">
+            <option value="default">Sortează după relevanță</option>
+            <option value="price-asc">Preț: crescător</option>
+            <option value="price-desc">Preț: descrescător</option>
+            <option value="name-asc">Denumire: A-Z</option>
+            <option value="name-desc">Denumire: Z-A</option>
+            <option value="rating">Rating: cel mai mare</option>
+          </select>
+        </div>
+
+        <!-- Grid produse – populat de search.js -->
+        <div class="products-grid" id="products-grid">
+          <!-- Cardurile sunt renderizate de JS -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="footer-logo">⚡ BorLock</span>
+        <p>Magazin online de tehnologie — soluții complete pentru pasionații de tech din România.</p>
+        <div class="footer-social">
+          <a href="#" title="Facebook">📘</a>
+          <a href="#" title="Instagram">📸</a>
+          <a href="#" title="YouTube">▶️</a>
+          <a href="#" title="Twitter">🐦</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigare</h4>
+        <ul>
+          <li><a href="index.html">Acasă</a></li>
+          <li><a href="products.html">Produse</a></li>
+          <li><a href="categories.html">Categorii</a></li>
+          <li><a href="cart.html">Coș</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Cont</h4>
+        <ul>
+          <li><a href="login.html">Autentificare</a></li>
+          <li><a href="register.html">Înregistrare</a></li>
+          <li><a href="favorites.html">Favorite</a></li>
+          <li><a href="compare.html">Comparare</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Informații</h4>
+        <ul>
+          <li><a href="#">Despre noi</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Termeni și condiții</a></li>
+          <li><a href="#">Politica de confidențialitate</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 BorLock. Toate drepturile rezervate.</p>
+      <p>Proiect educațional – Atestat IT, clasa a XII-a</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script src="js/script.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/search.js"></script>
+
+  <script>
+    /* ============================================================
+       LOGICĂ SPECIFICĂ products.html
+       ============================================================ */
+
+    /**
+     * Populează contoarele de produse din sidebar după categorii
+     */
+    function updateCategoryCounts() {
+      document.getElementById('count-all').textContent = products.length;
+
+      const categories = ['Laptops', 'Smartphones', 'Tablete', 'Monitoare', 'Periferice', 'Audio', 'Gaming'];
+      categories.forEach(cat => {
+        const id = 'count-' + cat.split(' ')[0];
+        const el = document.getElementById(id);
+        if (el) el.textContent = products.filter(p => p.category === cat).length;
+      });
+
+      // Componente PC special
+      const compEl = document.getElementById('count-Componente');
+      if (compEl) compEl.textContent = products.filter(p => p.category === 'Componente PC').length;
+    }
+
+    /**
+     * Gestionează căutarea din navbar (redirect la pagina curentă cu parametru)
+     */
+    function handleNavbarSearch() {
+      const query = document.getElementById('navbar-search-input').value.trim();
+      if (query) {
+        const searchInput = document.getElementById('search-input');
+        if (searchInput) {
+          searchInput.value = query;
+          currentSearchTerm = query.toLowerCase();
+          renderFilteredProducts();
+        }
+      }
+    }
+
+    document.getElementById('navbar-search-input').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') handleNavbarSearch();
+    });
+
+    // Actualizare slider preț
+    document.addEventListener('DOMContentLoaded', () => {
+      updateCategoryCounts();
+
+      // Verifică dacă există parametru de căutare în URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const searchParam = urlParams.get('search');
+      if (searchParam) {
+        const searchInput = document.getElementById('search-input');
+        if (searchInput) searchInput.value = searchParam;
+        currentSearchTerm = searchParam.toLowerCase();
+      }
+    });
+  </script>
+</body>
+</html>
