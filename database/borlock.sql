@@ -274,13 +274,17 @@ INSERT INTO products (name, category_id, price, old_price, description, specs, s
 
 -- ============================================================
 -- UTILIZATOR DE TEST (parolă: "test1234")
--- Parola este hash-uită cu bcrypt pentru securitate
+-- IMPORTANT: Acest hash este un exemplu/placeholder.
+-- Înainte de a folosi în producție, regenerați hash-ul cu:
+--   php -r "echo password_hash('parola_reala', PASSWORD_DEFAULT);"
+-- NU folosiți hash-uri precalculate/publice în producție!
 -- ============================================================
 INSERT INTO users (name, email, password) VALUES
 (
   'Test User',
   'test@borlock.ro',
-  -- Hash-ul parolei "test1234" generat cu password_hash('test1234', PASSWORD_DEFAULT)
+  -- Hash-ul de mai jos este DOAR EXEMPLU – înlocuiți-l cu unul generat de voi
+  -- Generați cu: php -r "echo password_hash('test1234', PASSWORD_DEFAULT);"
   '$2y$12$B1nJIECHHhO1B0p6z5L3r.TQwsrZ3JwZ5nH/G9YEKkJ7pFAzPMZcK'
 );
 

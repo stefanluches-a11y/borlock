@@ -298,61 +298,35 @@
 
     /**
      * Actualizează bara de putere a parolei
+     * @param {string} password
      */
     function updatePasswordStrength(password) {
       const strengthDiv = document.getElementById('password-strength');
       const strengthText = document.getElementById('strength-text');
 
-      if (password.length === 0) {
-        strengthDiv.style.display = 'none';
+      if (!password || password.length === 0) {
+        if (strengthDiv) strengthDiv.style.display = 'none';
         return;
       }
 
-      strengthDiv.style.display = 'block';
+      if (strengthDiv) strengthDiv.style.display = 'block';
       const strength = getPasswordStrength(password);
 
-      const colors = ['', var(--danger), '#f59e0b', '#3b82f6', var(--success)'];
-      const labels = ['', 'Slabă', 'Acceptabilă', 'Bună', 'Excelentă'];
+      // Culori pentru fiecare nivel de putere (folosim hex în loc de var(--...))
+      const colors = ['#ef4444', '#ef4444', '#f59e0b', '#3b82f6', '#10b981'];
+      const labels = ['Prea scurtă', 'Slabă', 'Acceptabilă', 'Bună', 'Excelentă'];
 
-      // Actualizăm barele
+      // Actualizăm barele de culoare
       for (let i = 1; i <= 4; i++) {
         const bar = document.getElementById(`strength-bar-${i}`);
-        bar.style.background = i <= strength ? (colors[strength] || 'var(--success)') : 'var(--border)';
+        if (bar) bar.style.background = i <= strength ? colors[strength] : '#e5e7eb';
       }
 
-      strengthText.textContent = `Putere parolă: ${labels[strength] || 'Slabă'}`;
-      strengthText.style.color = colors[strength] || 'var(--danger)';
+      if (strengthText) {
+        strengthText.textContent = `Putere parolă: ${labels[strength]}`;
+        strengthText.style.color = colors[strength];
+      }
     }
-
-    // Fix: using actual CSS variables as strings won't work in template literals directly
-    // Let's rewrite updatePasswordStrength properly
-    (function patchUpdatePasswordStrength() {
-      window.updatePasswordStrength = function(password) {
-        const strengthDiv = document.getElementById('password-strength');
-        const strengthText = document.getElementById('strength-text');
-
-        if (!password || password.length === 0) {
-          if (strengthDiv) strengthDiv.style.display = 'none';
-          return;
-        }
-
-        if (strengthDiv) strengthDiv.style.display = 'block';
-        const strength = getPasswordStrength(password);
-
-        const colors = ['#ef4444', '#ef4444', '#f59e0b', '#3b82f6', '#10b981'];
-        const labels = ['Prea scurtă', 'Slabă', 'Acceptabilă', 'Bună', 'Excelentă'];
-
-        for (let i = 1; i <= 4; i++) {
-          const bar = document.getElementById(`strength-bar-${i}`);
-          if (bar) bar.style.background = i <= strength ? colors[strength] : '#e5e7eb';
-        }
-
-        if (strengthText) {
-          strengthText.textContent = `Putere parolă: ${labels[strength]}`;
-          strengthText.style.color = colors[strength];
-        }
-      };
-    })();
 
     /**
      * Toggle vizibilitate parolă
