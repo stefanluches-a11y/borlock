@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BorLock – Creează un cont nou și beneficiază de oferte exclusive!">
+  <title>Înregistrare – BorLock</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="index.html" class="navbar-logo">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">BorLock</span>
+      </a>
+      <div class="navbar-search">
+        <input type="text" id="navbar-search-input" placeholder="Caută produse..." aria-label="Caută produse">
+        <span class="search-icon" onclick="handleNavbarSearch()">🔍</span>
+      </div>
+      <ul class="nav-links" id="nav-menu">
+        <li><a href="index.html">🏠 Acasă</a></li>
+        <li><a href="products.html">🛍️ Produse</a></li>
+        <li><a href="categories.html">📂 Categorii</a></li>
+        <li><a href="favorites.html">❤️ Favorite</a></li>
+        <li><a href="compare.html">⚖️ Compară</a></li>
+        <li>
+          <a href="cart.html" class="cart-link">
+            🛒 Coș
+            <span id="cart-badge">0</span>
+          </a>
+        </li>
+        <li><a href="login.html">👤 Conectează-te</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Meniu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- FORMULAR ÎNREGISTRARE -->
+  <div class="auth-page">
+    <div class="auth-container">
+
+      <!-- Logo -->
+      <div class="auth-logo">
+        <span class="logo-text">⚡ BorLock</span>
+        <p>Creează un cont și beneficiază de oferte exclusive!</p>
+      </div>
+
+      <h2>📝 Înregistrare</h2>
+
+      <!-- Formular înregistrare -->
+      <form id="register-form" novalidate>
+
+        <!-- Nume complet -->
+        <div class="form-group">
+          <label for="name">👤 Nume complet</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Ex: Ion Popescu"
+            autocomplete="name"
+            required
+            minlength="3"
+          >
+          <span class="field-error" id="name-error"></span>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email">📧 Adresă de email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="exemplu@email.com"
+            autocomplete="email"
+            required
+          >
+          <span class="field-error" id="email-error"></span>
+        </div>
+
+        <!-- Parolă -->
+        <div class="form-group">
+          <label for="password">🔒 Parolă</label>
+          <div style="position: relative;">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Minimum 8 caractere"
+              autocomplete="new-password"
+              required
+              minlength="8"
+            >
+            <button type="button"
+              onclick="togglePasswordVisibility('password', 'toggle-password')"
+              style="
+                position: absolute;
+                right: 12px;
+                top: 50%;
+                transform: translateY(-50%);
+                background: none;
+                border: none;
+                cursor: pointer;
+                font-size: 1.1rem;
+                color: var(--text-light);
+              "
+              id="toggle-password"
+              title="Arată/ascunde parola">👁️</button>
+          </div>
+          <!-- Indicator putere parolă -->
+          <div id="password-strength" style="margin-top: 6px; display: none;">
+            <div style="display: flex; gap: 4px; margin-bottom: 4px;">
+              <div id="strength-bar-1" style="flex: 1; height: 4px; border-radius: 2px; background: var(--border);"></div>
+              <div id="strength-bar-2" style="flex: 1; height: 4px; border-radius: 2px; background: var(--border);"></div>
+              <div id="strength-bar-3" style="flex: 1; height: 4px; border-radius: 2px; background: var(--border);"></div>
+              <div id="strength-bar-4" style="flex: 1; height: 4px; border-radius: 2px; background: var(--border);"></div>
+            </div>
+            <span id="strength-text" style="font-size: 0.75rem; color: var(--text-light);"></span>
+          </div>
+          <span class="field-error" id="password-error"></span>
+        </div>
+
+        <!-- Confirmare parolă -->
+        <div class="form-group">
+          <label for="confirm-password">🔒 Confirmare parolă</label>
+          <div style="position: relative;">
+            <input
+              type="password"
+              id="confirm-password"
+              name="confirm-password"
+              placeholder="Repetă parola"
+              autocomplete="new-password"
+              required
+            >
+            <button type="button"
+              onclick="togglePasswordVisibility('confirm-password', 'toggle-confirm')"
+              style="
+                position: absolute;
+                right: 12px;
+                top: 50%;
+                transform: translateY(-50%);
+                background: none;
+                border: none;
+                cursor: pointer;
+                font-size: 1.1rem;
+                color: var(--text-light);
+              "
+              id="toggle-confirm"
+              title="Arată/ascunde parola">👁️</button>
+          </div>
+          <span class="field-error" id="confirm-password-error"></span>
+        </div>
+
+        <!-- Termeni și condiții -->
+        <div class="form-group" style="display: flex; align-items: flex-start; gap: 10px;">
+          <input
+            type="checkbox"
+            id="terms"
+            name="terms"
+            style="margin-top: 3px; accent-color: var(--secondary); width: 16px; height: 16px;"
+            required
+          >
+          <label for="terms" style="font-size: 0.85rem; font-weight: normal; cursor: pointer;">
+            Am citit și accept
+            <a href="#" style="color: var(--secondary);">Termenii și condițiile</a>
+            și
+            <a href="#" style="color: var(--secondary);">Politica de confidențialitate</a>
+          </label>
+        </div>
+        <span class="field-error" id="terms-error"></span>
+
+        <!-- Mesaj eroare general -->
+        <div id="register-error" style="
+          display: none;
+          background: rgba(239, 68, 68, 0.1);
+          border: 1px solid var(--danger);
+          border-radius: 8px;
+          padding: 10px 14px;
+          font-size: 0.875rem;
+          color: var(--danger);
+          margin-bottom: 16px;
+        "></div>
+
+        <!-- Mesaj succes -->
+        <div id="register-success" style="
+          display: none;
+          background: rgba(16, 185, 129, 0.1);
+          border: 1px solid var(--success);
+          border-radius: 8px;
+          padding: 10px 14px;
+          font-size: 0.875rem;
+          color: var(--success);
+          margin-bottom: 16px;
+        "></div>
+
+        <!-- Buton submit -->
+        <button type="submit" class="btn-auth" id="register-btn">
+          🚀 Creează contul
+        </button>
+      </form>
+
+      <!-- Link login -->
+      <div class="auth-footer">
+        <p>Ai deja cont? <a href="login.html">Autentifică-te →</a></p>
+      </div>
+
+      <!-- Link PHP (pentru evaluare) -->
+      <div style="
+        margin-top: 16px;
+        padding: 12px;
+        background: var(--gray);
+        border-radius: 8px;
+        font-size: 0.75rem;
+        color: var(--text-light);
+        text-align: center;
+      ">
+        🔧 <strong>PHP backend:</strong> Procesare via
+        <code style="background: white; padding: 2px 5px; border-radius: 3px;">php/register_process.php</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="footer-logo">⚡ BorLock</span>
+        <p>Magazin online de tehnologie — soluții complete pentru pasionații de tech din România.</p>
+        <div class="footer-social">
+          <a href="#" title="Facebook">📘</a>
+          <a href="#" title="Instagram">📸</a>
+          <a href="#" title="YouTube">▶️</a>
+          <a href="#" title="Twitter">🐦</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigare</h4>
+        <ul>
+          <li><a href="index.html">Acasă</a></li>
+          <li><a href="products.html">Produse</a></li>
+          <li><a href="categories.html">Categorii</a></li>
+          <li><a href="cart.html">Coș</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Cont</h4>
+        <ul>
+          <li><a href="login.html">Autentificare</a></li>
+          <li><a href="register.html">Înregistrare</a></li>
+          <li><a href="favorites.html">Favorite</a></li>
+          <li><a href="compare.html">Comparare</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Informații</h4>
+        <ul>
+          <li><a href="#">Despre noi</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Termeni și condiții</a></li>
+          <li><a href="#">Politica de confidențialitate</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 BorLock. Toate drepturile rezervate.</p>
+      <p>Proiect educațional – Atestat IT, clasa a XII-a</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script src="js/script.js"></script>
+
+  <script>
+    /* ============================================================
+       LOGICĂ SPECIFICĂ register.html
+       ============================================================ */
+
+    /**
+     * Calculează puterea parolei
+     * @param {string} password
+     * @returns {number} 0-4
+     */
+    function getPasswordStrength(password) {
+      let strength = 0;
+      if (password.length >= 8) strength++;
+      if (password.length >= 12) strength++;
+      if (/[A-Z]/.test(password)) strength++;
+      if (/[0-9]/.test(password)) strength++;
+      if (/[^a-zA-Z0-9]/.test(password)) strength++;
+      return Math.min(strength, 4);
+    }
+
+    /**
+     * Actualizează bara de putere a parolei
+     * @param {string} password
+     */
+    function updatePasswordStrength(password) {
+      const strengthDiv = document.getElementById('password-strength');
+      const strengthText = document.getElementById('strength-text');
+
+      if (!password || password.length === 0) {
+        if (strengthDiv) strengthDiv.style.display = 'none';
+        return;
+      }
+
+      if (strengthDiv) strengthDiv.style.display = 'block';
+      const strength = getPasswordStrength(password);
+
+      // Culori pentru fiecare nivel de putere (folosim hex în loc de var(--...))
+      const colors = ['#ef4444', '#ef4444', '#f59e0b', '#3b82f6', '#10b981'];
+      const labels = ['Prea scurtă', 'Slabă', 'Acceptabilă', 'Bună', 'Excelentă'];
+
+      // Actualizăm barele de culoare
+      for (let i = 1; i <= 4; i++) {
+        const bar = document.getElementById(`strength-bar-${i}`);
+        if (bar) bar.style.background = i <= strength ? colors[strength] : '#e5e7eb';
+      }
+
+      if (strengthText) {
+        strengthText.textContent = `Putere parolă: ${labels[strength]}`;
+        strengthText.style.color = colors[strength];
+      }
+    }
+
+    /**
+     * Toggle vizibilitate parolă
+     */
+    function togglePasswordVisibility(inputId, btnId) {
+      const input = document.getElementById(inputId);
+      const btn = document.getElementById(btnId);
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.textContent = '🙈';
+      } else {
+        input.type = 'password';
+        btn.textContent = '👁️';
+      }
+    }
+
+    /**
+     * Validează formularul de înregistrare
+     * @returns {boolean}
+     */
+    function validateRegisterForm() {
+      let valid = true;
+
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirm-password').value;
+      const terms = document.getElementById('terms').checked;
+
+      // Resetăm erorile
+      ['name', 'email', 'password', 'confirm-password'].forEach(field => {
+        document.getElementById(`${field}-error`).textContent = '';
+        document.getElementById(field).classList.remove('error');
+      });
+      document.getElementById('terms-error').textContent = '';
+
+      // Validare nume
+      if (!name) {
+        document.getElementById('name-error').textContent = 'Numele este obligatoriu.';
+        document.getElementById('name').classList.add('error');
+        valid = false;
+      } else if (name.length < 3) {
+        document.getElementById('name-error').textContent = 'Numele trebuie să aibă cel puțin 3 caractere.';
+        document.getElementById('name').classList.add('error');
+        valid = false;
+      }
+
+      // Validare email
+      if (!email) {
+        document.getElementById('email-error').textContent = 'Adresa de email este obligatorie.';
+        document.getElementById('email').classList.add('error');
+        valid = false;
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        document.getElementById('email-error').textContent = 'Introduceți o adresă de email validă.';
+        document.getElementById('email').classList.add('error');
+        valid = false;
+      }
+
+      // Validare parolă
+      if (!password) {
+        document.getElementById('password-error').textContent = 'Parola este obligatorie.';
+        document.getElementById('password').classList.add('error');
+        valid = false;
+      } else if (password.length < 8) {
+        document.getElementById('password-error').textContent = 'Parola trebuie să aibă cel puțin 8 caractere.';
+        document.getElementById('password').classList.add('error');
+        valid = false;
+      }
+
+      // Validare confirmare parolă
+      if (!confirmPassword) {
+        document.getElementById('confirm-password-error').textContent = 'Vă rugăm confirmați parola.';
+        document.getElementById('confirm-password').classList.add('error');
+        valid = false;
+      } else if (password !== confirmPassword) {
+        document.getElementById('confirm-password-error').textContent = 'Parolele nu coincid.';
+        document.getElementById('confirm-password').classList.add('error');
+        valid = false;
+      }
+
+      // Validare termeni
+      if (!terms) {
+        document.getElementById('terms-error').textContent = 'Trebuie să accepți termenii și condițiile.';
+        valid = false;
+      }
+
+      return valid;
+    }
+
+    /**
+     * Simulează înregistrarea locală (pentru demo)
+     * În producție, trimite datele la php/register_process.php
+     */
+    function simulateRegister(name, email, password) {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          // Verificăm dacă email-ul există deja
+          const users = JSON.parse(localStorage.getItem('borlock_users') || '[]');
+          const existingUser = users.find(u => u.email === email);
+
+          if (existingUser) {
+            resolve({ success: false, message: 'Această adresă de email este deja înregistrată.' });
+            return;
+          }
+
+          // Salvăm utilizatorul (în producție, parola ar fi hash-uită cu PHP password_hash())
+          const newUser = { name, email, password, created_at: new Date().toISOString() };
+          users.push(newUser);
+          localStorage.setItem('borlock_users', JSON.stringify(users));
+
+          resolve({ success: true, user: newUser });
+        }, 800);
+      });
+    }
+
+    // Gestionare submit formular înregistrare
+    document.getElementById('register-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (!validateRegisterForm()) return;
+
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const registerBtn = document.getElementById('register-btn');
+      const registerError = document.getElementById('register-error');
+      const registerSuccess = document.getElementById('register-success');
+
+      // Stare loading
+      registerBtn.disabled = true;
+      registerBtn.textContent = '⏳ Se creează contul...';
+      registerError.style.display = 'none';
+      registerSuccess.style.display = 'none';
+
+      try {
+        const result = await simulateRegister(name, email, password);
+
+        if (result.success) {
+          registerSuccess.textContent = `✅ Contul a fost creat cu succes! Bine ai venit, ${name}! Te redirecționăm la autentificare...`;
+          registerSuccess.style.display = 'block';
+
+          // Redirecționăm la login după 2 secunde
+          setTimeout(() => {
+            window.location.href = 'login.html';
+          }, 2000);
+        } else {
+          registerError.textContent = result.message || 'Eroare la înregistrare.';
+          registerError.style.display = 'block';
+        }
+      } catch (err) {
+        registerError.textContent = 'Eroare de conexiune. Încearcă din nou.';
+        registerError.style.display = 'block';
+      } finally {
+        registerBtn.disabled = false;
+        registerBtn.textContent = '🚀 Creează contul';
+      }
+    });
+
+    // Indicator putere parolă în timp real
+    document.getElementById('password').addEventListener('input', (e) => {
+      updatePasswordStrength(e.target.value);
+      document.getElementById('password-error').textContent = '';
+      document.getElementById('password').classList.remove('error');
+    });
+
+    // Eliminăm erorile la editare
+    ['name', 'email', 'confirm-password'].forEach(field => {
+      document.getElementById(field).addEventListener('input', () => {
+        document.getElementById(`${field}-error`).textContent = '';
+        document.getElementById(field).classList.remove('error');
+        document.getElementById('register-error').style.display = 'none';
+      });
+    });
+
+    function handleNavbarSearch() {
+      const query = document.getElementById('navbar-search-input').value.trim();
+      if (query) window.location.href = `products.html?search=${encodeURIComponent(query)}`;
+    }
+
+    document.getElementById('navbar-search-input').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') handleNavbarSearch();
+    });
+  </script>
+</body>
+</html>
